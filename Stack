@@ -1,0 +1,102 @@
+#include<iostream>
+#define MAX 10
+using namespace std;
+
+class Stack
+{
+        int a[MAX];
+        int head=0;
+    public:
+
+        int top();
+        void push(int x);
+        void pop();
+        void display();
+        void Reverse();
+        void insert_bottom(int x);
+};
+
+//Stack::Stack()
+//{
+//   head=0;
+//}
+int Stack::top()
+{
+    return a[head];
+}
+void Stack::push(int x)
+{
+    if(head<MAX)
+    {
+      //  cout<<x<<"hi"<<head<<endl;
+        a[head]=x;
+        head++;
+    }
+    else
+        cout<<"overflow"<<endl;
+
+}
+void Stack::pop()
+{
+    if(head>=0)
+    {
+        head--;
+    }
+    else
+        cout<<"underflow"<<endl;
+}
+void Stack::display()
+{
+    int i=0;
+   // cout<<a[5];
+    for(i=0;i<head;i++)
+        cout<<a[i]<<endl;
+}
+void Stack::insert_bottom(int x)
+{
+    if(head<MAX)
+    {
+    head++;
+    for(int i=head;i>0;i--)
+    {
+        a[i]=a[i-1];
+    }
+    a[0]=x;
+    }
+    else
+        cout<<"overflow";
+}
+void Stack::Reverse()
+{
+    if(head<0)
+    {
+        return;
+    }
+    int x=this->top();
+    this->pop();
+    this->Reverse();
+    this->insert_bottom(x);
+}
+int main()
+{
+    Stack f;
+    for(int i=10;i>4;i--)
+    {
+        f.push(i);
+    }
+    f.insert_bottom(99);
+    f.display();
+  /*  f.pop();
+    f.pop();
+    f.pop();
+    f.pop();
+    f.pop();
+    f.pop();
+    f.pop();
+    f.pop();
+    */
+    cout<<endl;
+    f.insert_bottom(99);
+    f.Reverse();
+    f.display();
+}
