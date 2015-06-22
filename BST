@@ -1,0 +1,161 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+    int data;
+    node *left;
+    node *right;
+};
+class BST
+{
+    node *root;
+    public:
+        BST()
+        {
+            root=NULL;
+        }
+        node *newnode(int x);
+        void Insert(int x);
+        node* insert(node *n,int x);
+        void insert(int x);
+        node *minval(node *n);
+        void deletee(int x);
+        node *deletee(node *n,int x);
+        void inorder();
+        void inorder(node *Root);
+        void preorder(node *Root);
+        void postorder(node *Root);
+        int height();
+        int height(node *n);
+
+};
+void BST::Insert(int x)
+{
+    insert(root,x);
+}
+node *BST::newnode(int x)
+{
+    node *temp=new node();
+    temp->data=x;
+    temp->left=NULL;
+    temp->right=NULL;
+    return temp;
+}
+node *BST::insert(node *n,int x)
+{
+    if(n==NULL)
+    {
+        return(newnode(x));
+    }
+    if(x<n->data)
+        n->left=insert(n->left,x);
+    else
+        n->right=insert(n->right,x);
+}
+
+void BST::insert(int x)
+{
+    node *temp=new node();
+    temp=newnode(x);
+    if(root==NULL)
+    {
+        root=temp;
+    }
+    else
+    {
+        node *temp1=root;
+        node *prev=temp1;
+        while(temp1!=NULL)
+        {
+            prev=temp1;
+            if(temp->data<temp1->data)
+                temp1=temp1->left;
+            else
+
+                temp1=temp1->right;
+        }
+        if(temp->data<prev->data)
+            prev->left=temp;
+        else
+            prev->right=temp;
+    }
+}
+void BST::deletee(int x)
+{
+    deletee(root,x);
+}
+node *BST::deletee(node *n,int x)
+{
+    if(n==NULL)
+        return n;
+    if(x<n->data)
+        n->left=deletee(n->left,x);
+    else if(x>n->data)
+        n->right=deletee(n->right,x);
+    else
+    {
+        if(n->left==NULL)
+        {
+            node *temp=n->right;
+            delete n;
+            return temp;
+        }
+        else if(n->right==NULL)
+        {
+            node *temp=n->left;
+            delete(n);
+            return temp;
+        }
+
+            node *temp=minval(n->right);
+            n->data=temp->data;
+            n->right=deletee(n->right,temp->data);
+
+    }
+}
+void BST::inorder()
+{
+    inorder(root);
+}
+node *BST::minval(node *n)
+{
+    while(n->left!=NULL)
+    {
+        n=n->left;
+    }
+    return n;
+}
+void BST::inorder(node *Root)
+{
+    if(Root==NULL)
+        return;
+    inorder(Root->left);
+    cout<<Root->data<<endl;
+    inorder(Root->right);
+}
+int BST::height()
+{
+    return(height(root));
+}
+int BST::height(node *n)
+{
+    if(n==NULL)
+        return 0;
+    return(1+max(height(n->left),height(n->right)));
+}
+int main()
+{
+    BST fj;
+    fj.insert(56);
+    fj.Insert(34);
+    fj.insert(99);
+    fj.Insert(101);
+    fj.insert(88);
+    fj.insert(100);
+    fj.inorder();
+    cout<<endl;
+    //fj.deletee(56);
+   cout<<fj.height();
+//    fj.inorder();
+
+}
